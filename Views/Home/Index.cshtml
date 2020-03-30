@@ -1,0 +1,87 @@
+﻿@model EntityLayer.UserEntity
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CBRE | Facility Source :: Active Service Provider API Integrations</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/images/favicon.png">
+    <link href="~/dist/login/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/dist/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/login/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/dist/login/css/main.css">
+</head>
+<body>
+  
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "login100-form" }))
+                    {
+                        <div class="mb-4"><img src="../assets/images/logo-login.png"></div>
+                        <span class="login100-form-title pt-2">
+                            Sign in with your CBRE account
+                        </span>
+
+                        <span class="login100-form-title pt-2" style="color:red;">
+                            @ViewBag.Error
+                        </span>
+
+                        <div class="form-group">
+                            <div class="icon-addon addon-lg">
+                                @Html.TextBoxFor(x => x.Username, new { @class = "form-control inputfield", required = "", placeholder = "someone@example.com" })
+                                <span class="fa fa-envelope" rel="tooltip" title="Username"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="icon-addon addon-lg">
+                                @Html.PasswordFor(x => x.Password, new { @class = "form-control inputfield", required = "", placeholder = "Password" })
+                                <span class="fa fa-key" rel="tooltip" title="Password"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex-sb-m w-full p-t-3 p-b-32">
+                            <div class="contact100-form-checkbox">
+                                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                <label class="label-checkbox100" for="ckb1">
+                                    Remember me
+                                </label>
+                            </div>
+
+                            <div>
+                                <a href="#" class="txt1">
+                                    Forgot Password?
+                                </a>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary submit_btn">Sign in</button>
+
+                    }
+
+                    <div class="login100-more" style="background-image: url('../assets/images/background/fs-login-bg.jpg');">
+                        <div id="left-box-content">
+                            <h4>Welcome to CBRE | Facility Source</h4>
+                            <h1>Active Service Provider API Integrations</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+
+    <script src="~/dist/login/vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="~/dist/login/vendor/bootstrap/js/popper.js" type="text/javascript"></script>
+    <script src="~/dist/login/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/dist/login/js/main.js" type="text/javascript"></script>
+</body>
+</html>

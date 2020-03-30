@@ -1,0 +1,651 @@
+﻿@model IEnumerable<EntityLayer.ServiceProviderEntity>
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="layoutSidenav">
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid api-dashboard">
+                <h3 class="mt-4 text-center">API Update</h3>
+                <p class="date">@DateTime.Now.ToString("MMMM dd, yyyy")</p>
+
+                <div class="row" style="margin-top: 40px;">
+                    <div class="col-md-6 col-lg-8 col-xl-8">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="api-boxes">
+                                    <p class="boxtitle">
+                                        Providers In Production with an API<br>
+                                                                           <span class="boxvalue">@ViewBag.ProvidersInProduction</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="api-boxes">
+                                    <p class="boxtitle">
+                                        Providers Who Went Live Last Week<br>
+                                                                         <span class="boxvalue">@ViewBag.ProviderWentLive</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="api-boxes">
+                                    <p class="boxtitle">
+                                        Number of Service Providers Testing<br>
+                                                                           <span class="boxvalue">@ViewBag.NumberOfSPTesting</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="api-boxes">
+                                    <p class="boxtitle">
+                                        Service Providers Being Whitelisted<br>
+                                        <span class="boxvalue">1</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="api-boxes">
+                                    <p class="boxtitle">
+                                        Scheduled QA Testing for Go Live<br>
+                                                                        <span class="boxvalue">@ViewBag.QAGoLive</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="api-boxes">
+                                    <p class="boxtitle">
+                                        Number of Service Providers Billed<br>
+                                                                          <span class="boxvalue">@ViewBag.SPBilled</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 col-xl-4">
+                        <div class="dgbox">
+                            <div class="valuebox">
+                                <h1 class="title">Service Provider Billed Total</h1>
+                                <p class="value">$@ViewBag.BilledAmount.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row api-data mt-3">
+                    <div class="col-12 col-sm-12 col-md-11 text-center">
+                        <h2>Active Service Provider API Integrations</h2>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-1 text-center text-md-right">
+                        @using (Html.BeginForm("Export", "Home", FormMethod.Post))
+                        {
+                            <button type="submit"><img src="~/assets/images/excel-icon.png"></button>
+                        }
+                    </div>
+
+                    <div class="col-12 pt-4">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="accordion-api">Provider: <span class="text-bold">@item.ProviderName</span></div>
+                            <div class="panel-api">
+                                <div class="row mt-3">
+                                    <div class="col-md-1 text-center">
+                                        @if (item.Status == "OnBoarding")
+                                        {
+                                            <span class="title">Status</span> <img title=@item.Status src="~/assets/images/status-yellow.png">
+                                        }
+                                        else
+                                        if (item.Status == "Staging Whitelisted")
+                                        {
+                                            <span class="title">Status</span> <img title=@item.Status src="~/assets/images/status-green.png">
+                                        }
+                                        else
+                                        if (item.Status == "QA Round 1")
+                                        {
+                                            <span class="title">Status</span> <img title=@item.Status src="~/assets/images/status-yellow.png">
+                                        }
+                                        else
+                                        if (item.Status == "QA Round 2")
+                                        {
+                                            <span class="title">Status</span> <img title=@item.Status src="~/assets/images/status-yellow.png">
+                                        }
+                                        else
+                                        if (item.Status == "Production Whitelisted")
+                                        {
+                                            <span class="title">Status</span> <img title=@item.Status src="~/assets/images/status-yellow.png">
+                                        }
+                                        else
+                                        if (item.Status == "Live")
+                                        {
+                                            <span class="title">Status</span> <img title=@item.Status src="~/assets/images/status-green.png">
+                                        }
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <span class="title">Go-Live Date:</span> <span class="value">@item.GoLiveDate</span>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span class="title">PM:</span> <span class="value">@item.ProjectManager</span>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span class="title">Phase:</span> <span class="value">@item.Phase</span>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span class="title">Fees:</span> <span class="value">@item.Fees</span>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span class="title">Type:</span> <span class="value">@item.Type</span>
+                                    </div>
+                                </div>
+
+                                <p class="title mt-3">Update:</p>
+                                <div class="text-highlighted">@item.Update</div>
+
+                                <p class="title mt-3">Issues Impacting Progress:</p>
+
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col" class="text-center first-col">Item #</th>
+                                            <th scope="col" class="text-center second-col">Issue</th>
+                                            <th scope="col" class="text-center third-col">Owner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (item.IssuesList != null)
+                                        {
+                                        foreach (var issue in item.IssuesList)
+                                        {
+                                            <tr>
+                                                <th scope="row" class="text-center">@issue.ItemNo</th>
+                                                <td class="text-center">@issue.Issue</td>
+                                                <td class="text-center">@issue.Owner</td>
+                                            </tr>
+                                        }
+                                        }
+                                        else { 
+                                        <tr>
+                                            <td colspan="3"> No Issues</td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+
+
+
+                        @*<div class="accordion-api">Provider: <span class="text-bold">Paintzen</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">PC Maintenance/Smartsheet</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-yellow.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">PTR Baler</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">Academy Fire</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">MaintenX</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">Century Fire protection</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">Nixon</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">Phoenix Technologies</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">Telgian</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="accordion-api">Provider: <span class="text-bold">Park Construction</span></div>
+                        <div class="panel-api">
+                            <div class="row mt-3">
+                                <div class="col-md-1 text-center">
+                                    <span class="title">Status</span> <img src="assets/images/status-green.png">
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="title">Go-Live Date:</span> <span class="value">March 2020</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">PM:</span> <span class="value">Martha</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Phase:</span> <span class="value">Testing</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Fees:</span> <span class="value">Waived for SBI</span>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="title">Type:</span> <span class="value">FMO</span>
+                                </div>
+                            </div>
+
+                            <p class="title mt-3">Update:</p>
+                            <div class="text-highlighted">Test work orders and script samples provided 2/23/20. Henry Schein advised that they are targeting some UAT testing the week of 2/24.</div>
+
+                            <p class="title mt-3">Issues Impacting Progress:</p>
+
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" class="text-center first-col">Item #</th>
+                                        <th scope="col" class="text-center second-col">Issue</th>
+                                        <th scope="col" class="text-center third-col">Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">01215</th>
+                                        <td class="text-center">None</td>
+                                        <td class="text-center">Robert Stanford</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>*@
+
+                    </div>
+                </div>
+
+                <br><br><br>
+
+            </div>
+        </main>
+
+    </div>
+</div>
+
