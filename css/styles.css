@@ -10370,5 +10370,91 @@ body {
 .panel-api .second-col { width: 55%; }
 .panel-api .third-col { width: 30%; }
 
+.upload-box {
+    -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.26);
+    -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.26);
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.26);
+    border: 1px solid #d1d3e2;    
+    background-color: #fff;
+    text-align: center;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    margin-bottom: 25px;
+}
+
+.upload-box span { font-family: SegoeUI-Semibold, sans-serif; font-size: 16px; }
+
+.upload-box #csvUploadFile { margin-top: 12px; font-size: 18px; margin-left: 100px; margin-top: 20px; }
+
+.csvupload-form .btn-light {
+    color: #000000;
+    background-color: #e7e7e7;
+    border-color: #cbcbcb;
+    font-size: 18px;
+    font-family: SegoeUI-Regular, sans-serif;
+    border-radius: 0;
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.csvupload-form .btn-green {
+    color: #FFFFFF;
+    background-color: #00a657;
+    border-color: #00a657;
+    font-size: 18px;
+    font-family: SegoeUI-Regular, sans-serif;
+    border-radius: 0;
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-left: 15px;
+}
+
+.upload-success h2 { font-size: 20px; font-family: SegoeUI-Semibold, sans-serif; color: #3e774b; margin-top: 15px; margin-bottom: 0px; }
+.upload-success p { margin-top: 3px; }
+
+.form-settings
+{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.form-settings .form-control
+{
+  border-radius: 0 !important;
+  padding:14px; 
+  height: 46px;
+}
+
+.form-settings .caption
+{
+  color: #929292;
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+.form-settings .col-form-label
+{
+  text-align: right;
+}
+
+@media (max-width: 767.98px)
+{
+  .form-settings
+    {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .form-settings .col-form-label
+    {
+      text-align: left;
+    }  
+}
 
 /* ------------------- */

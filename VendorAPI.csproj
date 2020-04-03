@@ -48,8 +48,16 @@
     <Reference Include="ClosedXML, Version=0.95.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ClosedXML.0.95.0-beta2\lib\net40\ClosedXML.dll</HintPath>
     </Reference>
+    <Reference Include="DataLayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DataLayer\bin\Debug\DataLayer.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityLayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntityLayer\bin\Debug\EntityLayer.dll</HintPath>
     </Reference>
     <Reference Include="ExcelNumberFormat, Version=1.0.3.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>packages\ExcelNumberFormat.1.0.3\lib\net20\ExcelNumberFormat.dll</HintPath>
@@ -57,7 +65,19 @@
     <Reference Include="FastMember, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\FastMember.1.3.0\lib\net45\FastMember.dll</HintPath>
     </Reference>
+    <Reference Include="LinqToExcel, Version=1.11.0.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=MSIL">
+      <HintPath>packages\LinqToExcel.1.11.0\lib\LinqToExcel.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Remotion, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>packages\LinqToExcel.1.11.0\lib\Remotion.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Data.Linq, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>packages\LinqToExcel.1.11.0\lib\Remotion.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Interfaces, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>packages\LinqToExcel.1.11.0\lib\Remotion.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -137,6 +157,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailSetting.cs" />
     <Compile Include="Models\Issues.cs" />
     <Compile Include="Models\ServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -226,14 +247,17 @@
     <Content Include="assets\extra-libs\multicheck\multicheck.css" />
     <Content Include="assets\extra-libs\sparkline\sparkline %282%29.js" />
     <Content Include="assets\extra-libs\sparkline\sparkline.js" />
+    <Content Include="assets\images\back-arrow.png" />
     <Content Include="assets\images\background\fs-login-bg %282%29.jpg" />
     <Content Include="assets\images\background\fs-login-bg.jpg" />
+    <Content Include="assets\images\checkmark.png" />
     <Content Include="assets\images\custom-select %282%29.png" />
     <Content Include="assets\images\custom-select.png" />
     <Content Include="assets\images\excel-icon.png" />
     <Content Include="assets\images\favicon %282%29.png" />
     <Content Include="assets\images\favicon.png" />
     <Content Include="assets\images\logo %282%29.png" />
+    <Content Include="assets\images\logo-email.png" />
     <Content Include="assets\images\logo-icon %282%29.png" />
     <Content Include="assets\images\logo-icon.png" />
     <Content Include="assets\images\logo-login %282%29.png" />
@@ -242,9 +266,15 @@
     <Content Include="assets\images\logo-text.png" />
     <Content Include="assets\images\logo-white.png" />
     <Content Include="assets\images\logo.png" />
+    <Content Include="assets\images\save-icon.png" />
+    <Content Include="assets\images\settings-icon.png" />
     <Content Include="assets\images\status-green.png" />
     <Content Include="assets\images\status-violet.png" />
     <Content Include="assets\images\status-yellow.png" />
+    <Content Include="assets\images\success-icon.png" />
+    <Content Include="assets\images\upload-icon-white.png" />
+    <Content Include="assets\images\upload-icon.png" />
+    <Content Include="assets\images\user-icon.png" />
     <Content Include="assets\img\error-404-monochrome.svg" />
     <Content Include="assets\libs\bootstrap-datepicker\dist\css\bootstrap-datepicker.min %282%29.css" />
     <Content Include="assets\libs\bootstrap-datepicker\dist\css\bootstrap-datepicker.min.css" />
@@ -1539,6 +1569,7 @@
     <Content Include="dist\login\vendor\select2\select2.min %282%29.js" />
     <Content Include="dist\login\vendor\select2\select2.min.css" />
     <Content Include="dist\login\vendor\select2\select2.min.js" />
+    <Content Include="EmailTemplates\ExcelUploadMail.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min %282%29.css" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -1549,6 +1580,7 @@
     <Content Include="fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="js\scripts.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont %282%29.eot" />
@@ -1689,6 +1721,7 @@
     <Content Include="css\webfont\SegoeUI-Semibold.eot" />
     <Content Include="css\webfont\SegoeUI-Semibold.ttf" />
     <Content Include="css\webfont\SegoeUI-Semibold.woff" />
+    <Content Include="ExcelTemplates\ProviderDataUploadTemplate.xlsx" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1703,7 +1736,9 @@
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\scripts.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1718,11 +1753,16 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\DashBoard.cshtml" />
+    <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="ServiceProviderData.xlsx" />
+    <Content Include="Views\Home\UploadConfirmation.cshtml" />
+    <Content Include="Views\Home\UpdateUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\images\big\" />
     <Folder Include="assets\images\users\" />
+    <Folder Include="UploadExcel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -1736,16 +1776,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
-      <Project>{d10a2f0b-8978-4a6a-9677-8e4511addf7b}</Project>
-      <Name>DataLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityLayer\EntityLayer.csproj">
-      <Project>{3cee5d38-a200-4de6-a739-9c4f813a2495}</Project>
-      <Name>EntityLayer</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

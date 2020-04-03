@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    Layout = null;
+}
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,43 +27,64 @@
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="#">Settings</a>
+                    @*<a class="dropdown-item" href="#">Update Profile</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="Index">Logout</a>*@
                     <a class="dropdown-item" href="Index">@Html.ActionLink("Update Profile", "UpdateUserProfile", "Home", new { @class = "dropdown-item" })</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="Index">@Html.ActionLink("Logout", "Logout", "Home", new { @class = "dropdown-item" })</a>
+
                 </div>
             </li>
         </ul>
     </nav>
-    @RenderBody()
+    <div id="layoutSidenav">
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid api-dashboard">
+                    <h3 class="mt-4 text-center"><img src="~/assets/images/excel-icon.png"> &nbsp;Upload Data</h3>
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="upload-box upload-success text-center">
+                                <div class="pt-5 pb-5">
+                                    <img src="~/assets/images/success-icon.png">
+                                    <h2>File has been uploaded successfuly.</h2>
+                                    <p>Please check your email for confirmation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
     <div class="container-fluid footer-section">
         <p>Copyright © CBRE | Facility Source 2020</p>
     </div>
-
-
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
+    <script src="~/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="~/assets/demo/chart-area-demo.js"></script>
+    <script src="~/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/datatables-demo.js"></script>
-    <script>
-        var acc = document.getElementsByClassName("accordion-api");
-        var i;
+    <script src="~/assets/demo/datatables-demo.js"></script>
+    <script>var acc = document.getElementsByClassName("accordion-api");
+var i;
 
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active-api");
-                var panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
-    </script>
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active-api");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}</script>
 </body>
 </html>
