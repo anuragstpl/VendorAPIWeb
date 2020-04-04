@@ -154,64 +154,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DataLayer\DataHelper\ServiceProviderHelper.cs" />
-    <Compile Include="DataLayer\DataHelper\UserHelper.cs" />
-    <Compile Include="DataLayer\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="DataLayer\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="DataLayer\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="DataLayer\Phase.cs">
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\Properties\AssemblyInfo.cs" />
-    <Compile Include="DataLayer\ServiceProvider.cs">
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\ServiceProviderIssue.cs">
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\Status.cs">
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\Type.cs">
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\UnitOfWork\UnitOfWork.cs" />
-    <Compile Include="DataLayer\UnitOfWork\VendorAPIRepository.cs" />
-    <Compile Include="DataLayer\User.cs">
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\UserRole.cs">
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\VendorAPIWebModel.Context.cs" />
-    <Compile Include="DataLayer\VendorAPIWebModel.Context1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VendorAPIWebModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\VendorAPIWebModel.cs" />
-    <Compile Include="DataLayer\VendorAPIWebModel.Designer.cs">
-      <DependentUpon>VendorAPIWebModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\VendorAPIWebModel1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataLayer\VendorAPIWebModel1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VendorAPIWebModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="EntityLayer\DashboardData.cs" />
-    <Compile Include="EntityLayer\IssuesEntity.cs" />
-    <Compile Include="EntityLayer\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="EntityLayer\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="EntityLayer\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="EntityLayer\Properties\AssemblyInfo.cs" />
-    <Compile Include="EntityLayer\ServiceProviderEntity.cs" />
-    <Compile Include="EntityLayer\UserEntity.cs" />
-    <Compile Include="EntityLayer\UserProfileData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1587,34 +1529,6 @@
     <Content Include="css\webfont\SegoeUI-Light.svg" />
     <Content Include="css\webfont\SegoeUI-Regular.svg" />
     <Content Include="css\webfont\SegoeUI-Semibold.svg" />
-    <Content Include="DataLayer\bin\Debug\DataLayer.dll" />
-    <Content Include="DataLayer\bin\Debug\DataLayer.pdb" />
-    <Content Include="DataLayer\bin\Debug\EntityFramework.dll" />
-    <Content Include="DataLayer\bin\Debug\EntityLayer.dll" />
-    <Content Include="DataLayer\bin\Debug\EntityLayer.pdb" />
-    <Content Include="DataLayer\bin\Debug\System.Data.Common.dll" />
-    <Content Include="DataLayer\bin\Debug\System.Data.SqlClient.dll" />
-    <Content Include="DataLayer\DataLayer.csproj" />
-    <Content Include="DataLayer\obj\Debug\DataLayer.csproj.FileListAbsolute.txt" />
-    <Content Include="DataLayer\obj\Debug\DataLayer.dll" />
-    <Content Include="DataLayer\obj\Debug\DataLayer.pdb" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorAPIModel.Context.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorAPIModel.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorAPIModel.Designer.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorAPIWebModel.Context.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorAPIWebModel.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorAPIWebModel.Designer.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorDBModel.Context.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorDBModel.cs.dll" />
-    <Content Include="DataLayer\obj\Debug\TempPE\VendorDBModel.Designer.cs.dll" />
-    <Content Include="DataLayer\VendorAPIWebModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>VendorAPIWebModel.Context1.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataLayer\VendorAPIWebModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>VendorAPIWebModel1.cs</LastGenOutput>
-    </Content>
     <Content Include="dist\login\css\main %282%29.css" />
     <Content Include="dist\login\css\main.css" />
     <Content Include="dist\login\css\util %282%29.css" />
@@ -1656,12 +1570,6 @@
     <Content Include="dist\login\vendor\select2\select2.min.css" />
     <Content Include="dist\login\vendor\select2\select2.min.js" />
     <Content Include="EmailTemplates\ExcelUploadMail.html" />
-    <Content Include="EntityLayer\bin\Debug\EntityLayer.dll" />
-    <Content Include="EntityLayer\bin\Debug\EntityLayer.pdb" />
-    <Content Include="EntityLayer\EntityLayer.csproj" />
-    <Content Include="EntityLayer\obj\Debug\EntityLayer.csproj.FileListAbsolute.txt" />
-    <Content Include="EntityLayer\obj\Debug\EntityLayer.dll" />
-    <Content Include="EntityLayer\obj\Debug\EntityLayer.pdb" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min %282%29.css" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -1814,32 +1722,6 @@
     <Content Include="css\webfont\SegoeUI-Semibold.ttf" />
     <Content Include="css\webfont\SegoeUI-Semibold.woff" />
     <Content Include="ExcelTemplates\ProviderDataUploadTemplate.xlsx" />
-    <Content Include="DataLayer\App.Config" />
-    <Content Include="DataLayer\bin\Debug\DataLayer.dll.config" />
-    <Content Include="DataLayer\obj\Debug\DataLayer.csproj.CopyComplete" />
-    <Content Include="DataLayer\obj\Debug\DataLayer.csproj.CoreCompileInputs.cache" />
-    <Content Include="DataLayer\obj\Debug\DataLayer.csprojAssemblyReference.cache" />
-    <Content Include="DataLayer\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorAPIModel.csdl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorAPIModel.msl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorAPIModel.ssdl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorAPIWebModel.csdl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorAPIWebModel.msl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorAPIWebModel.ssdl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorDBModel.csdl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorDBModel.msl" />
-    <Content Include="DataLayer\obj\Debug\edmxResourcesToEmbed\VendorDBModel.ssdl" />
-    <None Include="DataLayer\packages.config" />
-    <EntityDeploy Include="DataLayer\VendorAPIWebModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>VendorAPIWebModel1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DataLayer\VendorAPIWebModel.edmx.diagram">
-      <DependentUpon>VendorAPIWebModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="EntityLayer\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache" />
-    <Content Include="EntityLayer\obj\Debug\EntityLayer.csprojAssemblyReference.cache" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1876,14 +1758,12 @@
     <Content Include="Views\Home\UploadConfirmation.cshtml" />
     <Content Include="Views\Home\UpdateUserProfile.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Views\Home\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\images\big\" />
     <Folder Include="assets\images\users\" />
-    <Folder Include="DataLayer\bin\Release\" />
-    <Folder Include="EntityLayer\bin\Release\" />
-    <Folder Include="EntityLayer\obj\Debug\TempPE\" />
     <Folder Include="UploadExcel\" />
   </ItemGroup>
   <ItemGroup>
