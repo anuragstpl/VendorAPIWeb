@@ -133,6 +133,32 @@ namespace VendorAPI.Controllers
             return RedirectToAction("UpdateUserProfile", "Home");
         }
 
+        public ActionResult AdminSettings()
+        {
+            return RedirectToAction("Settings");
+        }
+
+        public ActionResult Settings()
+        {
+            UserProfileData userProfileData = new UserProfileData();
+
+            userProfileData = userHelper.GetUserProfileData(Convert.ToInt32(Session["UserID"]));
+            return View(userProfileData);
+        }
+
+
+        public ActionResult SettingsPost(UserProfileData userProfileData)
+        {
+            try
+            {
+                userProfileData.UserId = Convert.ToInt32(Session["UserID"]);
+                userHelper.UpdateEmail(userProfileData);
+                TempData["Message"] = "Email updated successfuly.";
+            }
+            catch (Exception ex) { ViewBag.message = "some issue occured. please try again"; }
+            return RedirectToAction("Settings", "Home");
+        }
+
         [HttpPost]
         public ActionResult UploadExcel(HttpPostedFileBase FileUpload)
         {

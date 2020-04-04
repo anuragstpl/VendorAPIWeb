@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VendorAPIWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Phase">
+    <Key>
+      <PropertyRef Name="PhaseID" />
+    </Key>
+    <Property Name="PhaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Phase1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ServiceProviders" Relationship="Self.FK_ServiceProviders_Phase1" FromRole="Phase" ToRole="ServiceProviders" />
+  </EntityType>
+  <EntityType Name="ServiceProviderIssue">
+    <Key>
+      <PropertyRef Name="SPIssueID" />
+    </Key>
+    <Property Name="SPIssueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceProviderID" Type="Int32" />
+    <Property Name="IssueItem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Issue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Owner" Type="Int32" />
+    <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProviderIssu_ServiceProviders" FromRole="ServiceProviderIssue" ToRole="ServiceProviders" />
+    <NavigationProperty Name="User" Relationship="Self.FK_ServiceProviderIssu_User" FromRole="ServiceProviderIssue" ToRole="User" />
+  </EntityType>
+  <EntityType Name="ServiceProvider">
+    <Key>
+      <PropertyRef Name="ServiceProviderID" />
+    </Key>
+    <Property Name="ServiceProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StatusID" Type="Int32" />
+    <Property Name="GoLiveDate" Type="DateTime" Precision="0" />
+    <Property Name="ProjectManagerID" Type="Int32" />
+    <Property Name="PhaseID" Type="Int32" />
+    <Property Name="Fees" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="Update" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Phase" Relationship="Self.FK_ServiceProviders_Phase1" FromRole="ServiceProviders" ToRole="Phase" />
+    <NavigationProperty Name="ServiceProviderIssues" Relationship="Self.FK_ServiceProviderIssu_ServiceProviders" FromRole="ServiceProviders" ToRole="ServiceProviderIssue" />
+    <NavigationProperty Name="Type" Relationship="Self.FK_ServiceProviders_Phase" FromRole="ServiceProviders" ToRole="Type" />
+    <NavigationProperty Name="Type1" Relationship="Self.FK_ServiceProviders_Status" FromRole="ServiceProviders" ToRole="Type" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_ServiceProviders_Status1" FromRole="ServiceProviders" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ServiceProviders" Relationship="Self.FK_ServiceProviders_Status1" FromRole="Status" ToRole="ServiceProviders" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ServiceProviders" Relationship="Self.FK_ServiceProviders_Phase" FromRole="Type" ToRole="ServiceProviders" />
+    <NavigationProperty Name="ServiceProviders1" Relationship="Self.FK_ServiceProviders_Status" FromRole="Type" ToRole="ServiceProviders" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserRoleID" Type="Int32" />
+    <NavigationProperty Name="ServiceProviderIssues" Relationship="Self.FK_ServiceProviderIssu_User" FromRole="User" ToRole="ServiceProviderIssue" />
+    <NavigationProperty Name="UserRole" Relationship="Self.FK_User_UserRoles" FromRole="User" ToRole="UserRoles" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRoleID" />
+    </Key>
+    <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserRole1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_UserRoles" FromRole="UserRoles" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_ServiceProviders_Phase1">
+    <End Role="Phase" Type="Self.Phase" Multiplicity="0..1" />
+    <End Role="ServiceProviders" Type="Self.ServiceProvider" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phase">
+        <PropertyRef Name="PhaseID" />
+      </Principal>
+      <Dependent Role="ServiceProviders">
+        <PropertyRef Name="PhaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviderIssu_ServiceProviders">
+    <End Role="ServiceProviders" Type="Self.ServiceProvider" Multiplicity="0..1" />
+    <End Role="ServiceProviderIssue" Type="Self.ServiceProviderIssue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceProviders">
+        <PropertyRef Name="ServiceProviderID" />
+      </Principal>
+      <Dependent Role="ServiceProviderIssue">
+        <PropertyRef Name="ServiceProviderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviderIssu_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="ServiceProviderIssue" Type="Self.ServiceProviderIssue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ServiceProviderIssue">
+        <PropertyRef Name="Owner" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviders_Phase">
+    <End Role="Type" Type="Self.Type" Multiplicity="0..1" />
+    <End Role="ServiceProviders" Type="Self.ServiceProvider" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="ServiceProviders">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviders_Status">
+    <End Role="Type" Type="Self.Type" Multiplicity="0..1" />
+    <End Role="ServiceProviders" Type="Self.ServiceProvider" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="ServiceProviders">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviders_Status1">
+    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+    <End Role="ServiceProviders" Type="Self.ServiceProvider" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="ServiceProviders">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_UserRoles">
+    <End Role="UserRoles" Type="Self.UserRole" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="UserRoleID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserRoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VendorAPIWebEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Phases" EntityType="Self.Phase" />
+    <EntitySet Name="ServiceProviderIssues" EntityType="Self.ServiceProviderIssue" />
+    <EntitySet Name="ServiceProviders" EntityType="Self.ServiceProvider" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Types" EntityType="Self.Type" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK_ServiceProviders_Phase1" Association="Self.FK_ServiceProviders_Phase1">
+      <End Role="Phase" EntitySet="Phases" />
+      <End Role="ServiceProviders" EntitySet="ServiceProviders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviderIssu_ServiceProviders" Association="Self.FK_ServiceProviderIssu_ServiceProviders">
+      <End Role="ServiceProviders" EntitySet="ServiceProviders" />
+      <End Role="ServiceProviderIssue" EntitySet="ServiceProviderIssues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviderIssu_User" Association="Self.FK_ServiceProviderIssu_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ServiceProviderIssue" EntitySet="ServiceProviderIssues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviders_Phase" Association="Self.FK_ServiceProviders_Phase">
+      <End Role="Type" EntitySet="Types" />
+      <End Role="ServiceProviders" EntitySet="ServiceProviders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviders_Status" Association="Self.FK_ServiceProviders_Status">
+      <End Role="Type" EntitySet="Types" />
+      <End Role="ServiceProviders" EntitySet="ServiceProviders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviders_Status1" Association="Self.FK_ServiceProviders_Status1">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="ServiceProviders" EntitySet="ServiceProviders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_UserRoles" Association="Self.FK_User_UserRoles">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

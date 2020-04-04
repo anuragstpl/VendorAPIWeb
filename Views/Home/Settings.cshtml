@@ -1,0 +1,45 @@
+﻿@model EntityLayer.UserProfileData
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid api-dashboard">
+                <h3 class="mt-4 text-center"><img src="~/assets/images/settings-icon.png"> &nbsp;Settings</h3>
+
+                @using (Html.BeginForm("SettingsPost", "Home", FormMethod.Post, new { @id = "setting", @class = "login100-form" }))
+                {
+                    <div class="row mt-4">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="upload-box text-left">
+                                @TempData["Message"]
+                                <div class="form-group row form-settings">
+                                    <label for="inputEmail3" class="col-sm-4 col-md-4 col-form-label">Administrator Email :</label>
+                                    <div class="col-sm-8 col-md-8">
+                                        @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control inputfield", required = "", placeholder = "Email Address" })
+                                        <p class="caption">You can get all email notifications on this email.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row csvupload-form">
+                                <div class="col-12 text-right">
+                                    <button type="reset" class="btn btn-light">Cancel</button> 
+                                    <button type="submit" class="btn btn-green">Save &nbsp;<img src="~/assets/images/save-icon.png"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                }
+
+            </div>
+        </main>
+
+    </div>
+</div>
