@@ -54,7 +54,10 @@ namespace VendorAPI.Controllers
         public FileResult Export()
         {
             DataTable dt = new DataTable("ServiceProviders");
-            dt.Columns.AddRange(new DataColumn[8] { new DataColumn("Name"),
+            dt.Columns.AddRange(
+            new DataColumn[9] {
+            new DataColumn("ServiceProviderCode"),
+            new DataColumn("Name"),
             new DataColumn("Status"),
             new DataColumn("GoLiveDate"),
             new DataColumn("ProjectManager"),
@@ -63,20 +66,37 @@ namespace VendorAPI.Controllers
             new DataColumn("Type"),
             new DataColumn("Update")});
 
+            DataTable dtIssue = new DataTable("IssueList");
+            dtIssue.Columns.AddRange(
+            new DataColumn[5] {
+            new DataColumn("ServiceProviderCode"),
+            new DataColumn("Name"),
+            new DataColumn("Item"),
+            new DataColumn("Issue"),
+            new DataColumn("Owner")});
+
             List<ServiceProviderEntity> serviceProviders = serviceProviderHelper.GetServiceProviders();
 
             foreach (var serviceProvider in serviceProviders)
             {
                 dt.Rows.Add(serviceProvider.Name, serviceProvider.Status, serviceProvider.GoLiveDate, serviceProvider.ProjectManager, serviceProvider.Phase, serviceProvider.Fees, serviceProvider.Type, serviceProvider.Update);
+
+                foreach (var issue in serviceProvider.IssuesList)
+                {
+                    dtIssue.Rows.Add(issue.ServiceProviderCode, issue.Item, issue.Issue, issue.Owner);
+                }
             }
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(dt); ds.Tables.Add(dtIssue);
 
             using (XLWorkbook wb = new XLWorkbook())
             {
-                wb.Worksheets.Add(dt);
+                wb.Worksheets.Add(ds);
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Details.xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ServiceProviderDetails.xlsx");
                 }
             }
         }
@@ -85,12 +105,13 @@ namespace VendorAPI.Controllers
         public ActionResult DashBoard()
         {
             DashboardData dashboardData = serviceProviderHelper.GetDashboardData();
-            ViewBag.BilledAmount = dashboardData.BilledAmount;
+            ViewBag.SPBilledTotalAmount = dashboardData.SPBilledTotalAmount;
             ViewBag.NumberOfSPTesting = dashboardData.NumberOfSPTesting;
             ViewBag.ProvidersInProduction = dashboardData.ProvidersInProduction;
-            ViewBag.ProviderWentLive = dashboardData.ProviderWentLive;
+            ViewBag.ProviderWentLiveLastWeek = dashboardData.ProviderWentLiveLastWeek;
             ViewBag.QAGoLive = dashboardData.QAGoLive;
-            ViewBag.SPBilled = dashboardData.SPBilled;
+            ViewBag.NoOfSPBilled = dashboardData.NoOfSPBilled;
+            ViewBag.SPBeingWhiteListed = dashboardData.SPBeingWhiteListed;
             List<ServiceProviderEntity> serviceProviders = serviceProviderHelper.GetServiceProviders();
 
             return View(serviceProviders);
@@ -145,7 +166,7 @@ namespace VendorAPI.Controllers
             userProfileData = userHelper.GetUserProfileData(Convert.ToInt32(Session["UserID"]));
             return View(userProfileData);
         }
-               
+
         public ActionResult SettingsPost(UserProfileData userProfileData)
         {
             try
@@ -178,8 +199,6 @@ namespace VendorAPI.Controllers
         public ActionResult UploadExcel(HttpPostedFileBase FileUpload)
         {
             ServiceProviderHelper serviceProviderHelper = new ServiceProviderHelper();
-            ServiceProviderEntity serviceProviderEntity = null;
-
             string viewName = "";
             try
             {
@@ -195,20 +214,19 @@ namespace VendorAPI.Controllers
                             FileUpload.SaveAs(targetpath + filename);
                             string pathToExcelFile = targetpath + filename;
 
-                            string sheetName = "Sheet1";
-
                             var excelFile = new ExcelQueryFactory(pathToExcelFile);//
-                            var providerDetails = from a in excelFile.Worksheet<ServiceProviderEntity>(sheetName) select a;
+                            var providerList = from provider in excelFile.Worksheet<ServiceProviderEntity>("ServiceProviderList") select provider;
+                            var issueList = from issue in excelFile.Worksheet<IssuesEntity>("IssueList") select issue;
 
-                            foreach (var provider in providerDetails)
+                            List<ServiceProviderEntity> serviceProviderEntityList = new List<ServiceProviderEntity>();
+
+                            foreach (var provider in providerList)
                             {
                                 if (provider.Name != null)
                                 {
-                                    DateTime? GoLiveDate = null;
-                                    GoLiveDate = Convert.ToDateTime(provider.GoLiveDate);
+                                    ServiceProviderEntity serviceProviderEntity = new ServiceProviderEntity();
 
-                                    serviceProviderEntity = new ServiceProviderEntity();
-
+                                    serviceProviderEntity.ServiceProviderCode = provider.ServiceProviderCode;
                                     serviceProviderEntity.Name = provider.Name;
                                     serviceProviderEntity.Status = provider.Status;
                                     serviceProviderEntity.GoLiveDate = provider.GoLiveDate;
@@ -217,15 +235,38 @@ namespace VendorAPI.Controllers
                                     serviceProviderEntity.Fees = provider.Fees;
                                     serviceProviderEntity.Type = provider.Type;
                                     serviceProviderEntity.Update = provider.Update;
+                                    //serviceProviderEntity.IssuesList = issueList == null ? null : new List<IssuesEntity>() { new IssuesEntity() { Item = issueList.Where(x => x.ServiceProviderCode == provider.ServiceProviderCode).Select(y => y.Item).FirstOrDefault(), Issue = issueList.Where(x => x.ServiceProviderCode == provider.ServiceProviderCode).Select(y => y.Issue).FirstOrDefault(), Owner = issueList.Where(x => x.ServiceProviderCode == provider.ServiceProviderCode).Select(y => y.Owner).FirstOrDefault() } };
 
-                                    serviceProviderHelper.AddProvider(serviceProviderEntity);
+                                    List<IssuesEntity> IssuesEntityList = new List<IssuesEntity>();
+                                    foreach (var issue in issueList.Where(i => i.ServiceProviderCode == provider.ServiceProviderCode))
+                                    {
+                                        if (issue.Issue != null)
+                                        {
+                                            IssuesEntity issuesEntity = new IssuesEntity();
+                                            issuesEntity.ServiceProviderCode = issue.ServiceProviderCode;
+                                            issuesEntity.Item = issue.Item;
+                                            issuesEntity.Issue = issue.Issue;
+                                            issuesEntity.Owner = issue.Owner;
 
-                                    EmailSetting emailSetting = new EmailSetting();
-                                    string Body = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplates/ExcelUploadMail.html"));
+                                            IssuesEntityList.Add(issuesEntity);
+                                        }
+                                    }
 
-                                    bool isMailSend = emailSetting.SendMail("irfan.siddiqui@srmtechsol.com", "", Body);
-                                    viewName = "uploadconfirmation";
+                                    if (IssuesEntityList.Count > 0)
+                                        serviceProviderEntity.IssuesList = IssuesEntityList;
+                                    serviceProviderEntityList.Add(serviceProviderEntity);
                                 }
+                            }
+
+                            if (serviceProviderEntityList.Count > 0)
+                            {
+                                serviceProviderHelper.AddProvider(serviceProviderEntityList);
+
+                                EmailSetting emailSetting = new EmailSetting();
+                                string Body = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplates/ExcelUploadMail.html"));
+
+                                bool isMailSend = emailSetting.SendMail("irfan.siddiqui@srmtechsol.com", "", Body);
+                                viewName = "uploadconfirmation";
                             }
                         }
                         else

@@ -27,7 +27,7 @@
                                 <div class="api-boxes">
                                     <p class="boxtitle">
                                         Providers Who Went Live Last Week<br>
-                                                                         <span class="boxvalue">@ViewBag.ProviderWentLive</span>
+                                                                         <span class="boxvalue">@ViewBag.ProviderWentLiveLastWeek</span>
                                     </p>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                 <div class="api-boxes">
                                     <p class="boxtitle">
                                         Service Providers Being Whitelisted<br>
-                                        <span class="boxvalue">1</span>
+                                                                           <span class="boxvalue">@ViewBag.SPBeingWhiteListed</span>
                                     </p>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                 <div class="api-boxes">
                                     <p class="boxtitle">
                                         Number of Service Providers Billed<br>
-                                                                          <span class="boxvalue">@ViewBag.SPBilled</span>
+                                                                          <span class="boxvalue">@ViewBag.NoOfSPBilled</span>
                                     </p>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                         <div class="dgbox">
                             <div class="valuebox">
                                 <h1 class="title">Total API Integration Fee</h1>
-                                <p class="value">$@ViewBag.BilledAmount.00</p>
+                                <p class="value">$@ViewBag.SPBilledTotalAmount</p>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                             <div class="panel-api">
                                 <div class="row mt-3">
                                     <div class="col-md-1 text-center">
-                                        @if (item.Status == "OnBoarding")
+                                        @if (item.Status == "On Boarding")
                                         {
                                             <span class="title">Status</span> <img title=@item.Status src="~/assets/images/status-yellow.png">
                                         }
@@ -160,7 +160,7 @@
                                         foreach (var issue in item.IssuesList)
                                         {
                                             <tr>
-                                                <th scope="row" class="text-center">@issue.ItemNo</th>
+                                                <th scope="row" class="text-center">@issue.Item</th>
                                                 <td class="text-center">@issue.Issue</td>
                                                 <td class="text-center">@issue.Owner</td>
                                             </tr>
