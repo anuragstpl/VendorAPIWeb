@@ -132,6 +132,7 @@ namespace DataLayer.DataHelper
 
                         if (serviceProvider != null)
                         {
+                            serviceProvider.Name = serviceProviderEntity.Name;
                             serviceProvider.StatusID = uow.StatusRepository.Get().Where(s => s.StatusName.Trim() == serviceProviderEntity.Status.Trim()).Select(y => y.StatusID).FirstOrDefault();
                             serviceProvider.GoLiveDate = serviceProviderEntity.GoLiveDate;
                             serviceProvider.ProjectManagerID = 1;

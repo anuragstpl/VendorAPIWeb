@@ -29,7 +29,7 @@ namespace VendorAPI.Controllers
             string viewName = "";
             userEntity = userHelper.LoginUser(userEntity);
 
-            if (userEntity.UserID > 0)
+            if (userEntity!=null && userEntity.UserID > 0)
             {
                 Session["UserID"] = userEntity.UserID;
                 FormsAuthentication.SetAuthCookie(userEntity.Username, true);
@@ -45,7 +45,7 @@ namespace VendorAPI.Controllers
             else
             {
                 viewName = "Index";
-                ViewBag.Error = "Incorrect UserID or Password.";
+                TempData["Message"] = "Incorrect UserID or Password.";
             }
             return RedirectToAction(viewName);
         }
@@ -83,7 +83,7 @@ namespace VendorAPI.Controllers
 
                 foreach (var issue in serviceProvider.IssuesList)
                 {
-                    dtIssue.Rows.Add(issue.ServiceProviderCode, issue.Item, issue.Issue, issue.Owner);
+                    dtIssue.Rows.Add(issue.ServiceProviderCode, serviceProvider.Name, issue.Item, issue.Issue, issue.Owner);
                 }
             }
 
@@ -148,9 +148,9 @@ namespace VendorAPI.Controllers
             {
                 userProfileData.UserId = Convert.ToInt32(Session["UserID"]);
                 userHelper.UpdateUser(userProfileData);
-                TempData["Message"] = "Profile updated successfuly.";
+                TempData["Message"] = "Profile updated successfully.";
             }
-            catch (Exception ex) { ViewBag.message = "some issue occured. please try again"; }
+            catch (Exception ex) { TempData["Message"] = "some issue occured. please try again"; }
             return RedirectToAction("UpdateUserProfile", "Home");
         }
 
@@ -175,7 +175,7 @@ namespace VendorAPI.Controllers
                 userHelper.UpdateEmail(userProfileData);
                 TempData["Message"] = "Email updated successfuly.";
             }
-            catch (Exception ex) { ViewBag.message = "some issue occured. please try again"; }
+            catch (Exception ex) { TempData["Message"] = "some issue occured. please try again"; }
             return RedirectToAction("Settings", "Home");
         }
 
@@ -188,11 +188,20 @@ namespace VendorAPI.Controllers
         {
             try
             {
-                //userHelper.UpdateEmail(userProfileData);
-                TempData["Message"] = "New password sent on your email.";
+                userEntity = userHelper.GetPassword(userEntity);
+                if (userEntity != null && !string.IsNullOrEmpty(userEntity.Password))
+                {
+                    EmailSetting emailSetting = new EmailSetting();
+                    string Body = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplates/ForgotPasswordMail.html"));
+
+                    bool isMailSend = emailSetting.SendMail(userEntity.Email, "", "Forgot Password Notification", Body.Replace("newpassword", userEntity.Password).Replace("currDate", DateTime.Now.ToString("MMMM dd, yyyy")));
+                    if (isMailSend)
+                        TempData["Message"] = "Your password sent on your email.";
+                }
+                else { TempData["Message"] = "Your email does not exists."; }
             }
-            catch (Exception ex) { ViewBag.message = "some issue occured. please try again"; }
-            return RedirectToAction("Settings", "Home");
+            catch (Exception ex) { TempData["Message"] = "some issue occured. please try again."; }
+            return RedirectToAction("ForgotPassword", "Home");
         }
 
         [HttpPost]
@@ -218,6 +227,7 @@ namespace VendorAPI.Controllers
                             var providerList = from provider in excelFile.Worksheet<ServiceProviderEntity>("ServiceProviderList") select provider;
                             var issueList = from issue in excelFile.Worksheet<IssuesEntity>("IssueList") select issue;
 
+                            //ValidateExcelFile();
                             List<ServiceProviderEntity> serviceProviderEntityList = new List<ServiceProviderEntity>();
 
                             foreach (var provider in providerList)
@@ -265,42 +275,56 @@ namespace VendorAPI.Controllers
                                 EmailSetting emailSetting = new EmailSetting();
                                 string Body = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplates/ExcelUploadMail.html"));
 
-                                bool isMailSend = emailSetting.SendMail("irfan.siddiqui@srmtechsol.com", "", Body);
+                                bool isMailSend = emailSetting.SendMail("irfan.siddiqui@srmtechsol.com", "", "Provider Details Upload Notification", Body.Replace("currDate", DateTime.Now.ToString("MMMM dd, yyyy")));
                                 viewName = "uploadconfirmation";
                             }
                         }
                         else
                         {
-                            ViewBag.Message = "Only Excel file format is allowed";
+                            TempData["Message"] = "Only Excel file format is allowed";
                             viewName = "AdminDashboard";
                         }
                     }
                     else
                     {
-                        ViewBag.Message = "Only Excel file format is allowed";
+                        TempData["Message"] = "Only Excel file format is allowed";
                         viewName = "AdminDashboard";
                     }
                 }
                 else
                 {
-                    ViewBag.Message = "Please select file.";
+                    TempData["Message"] = "Please select file.";
                     return RedirectToAction("AdminDashboard", "Home");
                 }
             }
-            catch (Exception ex) { ViewBag.message = "some issue occured. please try again"; }
+            catch (Exception ex) { TempData["Message"] = "some issue occured. please try again"; }
             return RedirectToAction(viewName);
         }
 
+        private string ValidateExcelFile(DataTable dataTable)
+        {
+            string errorMsg = string.Empty;
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                if (dataTable.Rows[i][0].ToString() == "")
+                {
+                    int RowNo = i + 2;
+                    errorMsg = "Please enter service provider name in row " + RowNo + "'"; 
+                }
+            }
+            return errorMsg;
+        }
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            TempData["Message"] = "Your application description page.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            TempData["Message"] = "Your contact page.";
 
             return View();
         }

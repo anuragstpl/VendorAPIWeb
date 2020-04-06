@@ -49,9 +49,14 @@
                             <div class="upload-box upload-success text-center">
                                 <div class="pt-5 pb-5">
                                     <img src="~/assets/images/success-icon.png">
-                                    <h2>File has been uploaded successfuly.</h2>
+                                    <h2>File has been uploaded successfully.</h2>
                                     <p>Please check your email for confirmation.</p>
-                                </div>
+                                    <img src="~/assets/images/back-arrow.png">
+                                    <a href="#" class="txt1">
+                                        @Html.ActionLink("Upload again?", "AdminDashboard", "Home", new { @class = "txt1" })
+
+                                    </a>
+                                </div>                                
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<EntityLayer.ServiceProviderEntity>
 @{
     ViewBag.Title = "AdminDashBoard";
-    Layout = null;
-    <span class="success sweet-alert"> @ViewBag.Message</span>
+    Layout = null;    
 }
 
 <!DOCTYPE html>
@@ -38,26 +37,50 @@
         </ul>
     </nav>
     <div id="layoutSidenav">
-
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid api-dashboard">
                     <h3 class="mt-4 text-center"><img src="~/assets/images/excel-icon.png"> &nbsp;Upload Data</h3>
                     @using (Html.BeginForm("UploadExcel", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                     {
+                        if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <img src="~/assets/images/checkmark.png"> @Html.Raw(TempData["Message"])
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
                         @*<form method="get" action="upload-confirmation.html">*@
                         <div class="row mt-4">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
                                 <div class="upload-box">
-                                    <div class="form-group">
-                                        <label for="csvUploadFile">
-                                            <img src="~/assets/images/upload-icon.png">
-                                            <div class="mt-2"><span>Drop Excel, CSV files or click here.</span></div>
-                                            @*<input type="file" id="fileupload" class="form-control-file"/>*@
-                                            <input type="file" class="form-control-file" id="csvUploadFile" name="FileUpload">
-                                        </label>
-                                    </div>                                    
+                                    <div class="row ml-4 mr-4">
+                                        <div class="col-sm-12 col-md-12 col-lg-5 text-left">
+                                            <div class="alert alert-success pt-4 pl-4" role="alert" style="border-radius: 0;">
+                                                <span style="font-weight: bold;">Steps to upload file:</span>
+                                                <ol>
+                                                    <li>Please download excel template <b><a href="~/ExcelTemplates/ProviderDataUploadTemplate.xlsx" class="txt1">Download</a></b></li>
+                                                    <li>Please fill data in same excel file</li>
+                                                    <li>Click on choose file</li>
+                                                    <li>Select that excel file (.xls and .xlsx only)</li>
+                                                    <li>Click on upload button</li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-7">
+                                            <div class="form-group">
+                                                <label for="csvUploadFile">
+                                                    <img src="~/assets/images/upload-icon.png">
+                                                    <div class="mt-2"><span>Drop Excel, CSV files or click here.</span></div>
+                                                    <input type="file" class="form-control-file" id="csvUploadFile" name="FileUpload">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <hr>
                                 <div class="row csvupload-form">
@@ -69,8 +92,8 @@
                             </div>
                             <div class="col-md-1"></div>
                         </div>
+                        @*</form>*@
                     }
-                    @*</form>*@
                 </div>
             </main>
         </div>

@@ -13,15 +13,14 @@ namespace VendorAPI.Models
         public string SMTPPassword = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["SMTPPassword"]);
         public string SMTPPort = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["SMTPPort"]);
         public string EmailFrom = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["EmailFrom"]);
-        public string Subject = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["Subject"]);
 
-        public bool SendMail(string To, string Cc, string Body)
+        public bool SendMail(string To, string Cc, string subject, string Body)
         {
             bool status = false;
             try
             {
                 MailMessage mm = new MailMessage(EmailFrom, To);
-                mm.Subject = Subject;
+                mm.Subject = subject;
                 mm.Body = Body;
                 mm.IsBodyHtml = true;
 

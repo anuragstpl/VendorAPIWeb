@@ -26,56 +26,58 @@
                 <div class="wrap-login100">
                     @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "login100-form" }))
                     {
-                        <div class="mb-4"><img src="../assets/images/logo-login.png"></div>
+                        <div class="mb-4"><img src="~/assets/images/logo-login.png"></div>
                         <span class="login100-form-title pt-2">
                             Sign in with your CBRE account
                         </span>
 
-                        <span class="login100-form-title pt-2" style="color:red;">
-                            @ViewBag.Error
-                        </span>
-
-                        <div class="form-group">
-                            <div class="icon-addon addon-lg">
-                                @Html.TextBoxFor(x => x.Username, new { @class = "form-control inputfield", required = "", placeholder = "someone@example.com" })
-                                <span class="fa fa-envelope" rel="tooltip" title="Username"></span>
+                        if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert" style="font-weight: bold;">
+                                @Html.Raw(TempData["Message"])
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="icon-addon addon-lg">
-                                @Html.PasswordFor(x => x.Password, new { @class = "form-control inputfield", required = "", placeholder = "Password" })
-                                <span class="fa fa-key" rel="tooltip" title="Password"></span>
-                            </div>
-                        </div>
-
-                        <div class="flex-sb-m w-full p-t-3 p-b-32">
-                            <div class="contact100-form-checkbox">
-                                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                                <label class="label-checkbox100" for="ckb1">
-                                    Remember me
-                                </label>
+                        }
+                            <div class="form-group">
+                                <div class="icon-addon addon-lg">
+                                    @Html.TextBoxFor(x => x.Username, new { @class = "form-control inputfield", required = "", placeholder = "someone@example.com" })
+                                    <span class="fa fa-envelope" rel="tooltip" title="Username"></span>
+                                </div>
                             </div>
 
-                            <div>
-                                <a href="#" class="txt1">
-                                    @Html.ActionLink("Forgot Password?", "ForgotPassword", "Home", new { @class = "txt1" })
-                                                                
-                                                            </a>
+                            <div class="form-group">
+                                <div class="icon-addon addon-lg">
+                                    @Html.PasswordFor(x => x.Password, new { @class = "form-control inputfield", required = "", placeholder = "Password" })
+                                    <span class="fa fa-key" rel="tooltip" title="Password"></span>
+                                </div>
                             </div>
-                        </div>
 
-                        <button type="submit" class="btn btn-primary submit_btn">Sign in</button>
+                            <div class="flex-sb-m w-full p-t-3 p-b-32">
+                                <div class="contact100-form-checkbox">
+                                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                    <label class="label-checkbox100" for="ckb1">
+                                        Remember me
+                                    </label>
+                                </div>
 
-                    }
+                                <div>
+                                    <a href="#" class="txt1">
+                                        @Html.ActionLink("Forgot Password?", "ForgotPassword", "Home", new { @class = "txt1" })
 
-                    <div class="login100-more" style="background-image: url('../assets/images/background/fs-login-bg.jpg');">
-                        <div id="left-box-content">
-                            <h4>Welcome to CBRE | Facility Source</h4>
-                            <h1>Active Service Provider API Integrations</h1>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary submit_btn">Sign in</button>
+
+                        }
+
+                        <div class="login100-more" style="background-image: url('../assets/images/background/fs-login-bg.jpg');">
+                            <div id="left-box-content">
+                                <h4>Welcome to CBRE | Facility Source</h4>
+                                <h1>Active Service Provider API Integrations</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
    

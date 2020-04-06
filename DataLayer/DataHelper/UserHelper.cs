@@ -110,5 +110,25 @@ namespace DataLayer.DataHelper
             }
             catch (Exception ex) { }
         }
+
+        public UserEntity GetPassword(UserEntity userEntity)
+        {
+            using (uow = new VendorAPIRepository())
+            {
+                userEntity = uow.UserRepository.Get().Where(urp => urp.Email == userEntity.Email)
+                    .Select(x => new UserEntity
+                    {
+                        UserID = Convert.ToInt32(x.UserID),
+                        Username = x.Username,
+                        Password = x.Password,
+                        UserRoleID = Convert.ToInt32(x.UserRoleID),
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        Email = x.Email,
+                        PhoneNo = x.PhoneNo
+                    }).FirstOrDefault();
+            }
+            return userEntity;
+        }
     }
 }

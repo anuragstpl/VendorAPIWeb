@@ -1660,6 +1660,7 @@
     <Content Include="dist\login\vendor\select2\select2.min.css" />
     <Content Include="dist\login\vendor\select2\select2.min.js" />
     <Content Include="EmailTemplates\ExcelUploadMail.html" />
+    <Content Include="EmailTemplates\ForgotPasswordMail.html" />
     <Content Include="EntityLayer\bin\Debug\EntityLayer.dll" />
     <Content Include="EntityLayer\bin\Debug\EntityLayer.pdb" />
     <Content Include="EntityLayer\EntityLayer.csproj" />
@@ -1846,7 +1847,6 @@
     </Content>
     <Content Include="EntityLayer\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache" />
-    <Content Include="EntityLayer\obj\Debug\EntityLayer.csprojAssemblyReference.cache" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

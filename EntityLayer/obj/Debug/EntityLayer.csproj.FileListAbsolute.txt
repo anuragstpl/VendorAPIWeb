@@ -8,4 +8,3 @@ D:\WorkingProject\Source\Repos\EntityLayer\bin\Debug\EntityLayer.pdb
 D:\WorkingProject\Source\Repos\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
 D:\WorkingProject\Source\Repos\EntityLayer\obj\Debug\EntityLayer.dll
 D:\WorkingProject\Source\Repos\EntityLayer\obj\Debug\EntityLayer.pdb
-D:\WorkingProject\Source\Repos\EntityLayer\obj\Debug\EntityLayer.csprojAssemblyReference.cache
