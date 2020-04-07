@@ -14,6 +14,11 @@ namespace VendorAPI.DataLayer
     
     public partial class User
     {
+        public User()
+        {
+            this.UploadExcelLogs = new HashSet<UploadExcelLog>();
+        }
+    
         public int UserID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -23,6 +28,7 @@ namespace VendorAPI.DataLayer
         public string PhoneNo { get; set; }
         public Nullable<int> UserRoleID { get; set; }
     
+        public virtual ICollection<UploadExcelLog> UploadExcelLogs { get; set; }
         public virtual UserRole UserRole { get; set; }
     }
 }

@@ -13,7 +13,7 @@
       <EntityTypeMapping TypeName="VendorAPIWebModel.ServiceProviderIssue">
         <MappingFragment StoreEntitySet="ServiceProviderIssue">
           <ScalarProperty Name="SPIssueID" ColumnName="SPIssueID" />
-          <ScalarProperty Name="ServiceProviderCode" ColumnName="ServiceProviderCode" />
+          <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
           <ScalarProperty Name="IssueItem" ColumnName="IssueItem" />
           <ScalarProperty Name="Issue" ColumnName="Issue" />
           <ScalarProperty Name="Owner" ColumnName="Owner" />
@@ -24,7 +24,7 @@
       <EntityTypeMapping TypeName="VendorAPIWebModel.ServiceProvider">
         <MappingFragment StoreEntitySet="ServiceProviders">
           <ScalarProperty Name="ServiceProviderID" ColumnName="ServiceProviderID" />
-          <ScalarProperty Name="ServiceProviderCode" ColumnName="ServiceProviderCode" />
+          <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="StatusID" ColumnName="StatusID" />
           <ScalarProperty Name="GoLiveDate" ColumnName="GoLiveDate" />
@@ -49,6 +49,15 @@
         <MappingFragment StoreEntitySet="Type">
           <ScalarProperty Name="TypeID" ColumnName="TypeID" />
           <ScalarProperty Name="Type1" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UploadExcelLogs">
+      <EntityTypeMapping TypeName="VendorAPIWebModel.UploadExcelLog">
+        <MappingFragment StoreEntitySet="UploadExcelLog">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

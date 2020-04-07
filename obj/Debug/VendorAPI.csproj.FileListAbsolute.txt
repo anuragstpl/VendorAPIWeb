@@ -119,8 +119,11 @@ D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\System.Web.WebPages.Deployment.d
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\System.Web.WebPages.dll
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\System.Web.WebPages.Razor.dll
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\WebGrease.dll
+D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\EntityFramework.dll
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\ClosedXML.pdb
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\ClosedXML.xml
+D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\DataLayer.pdb
+D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\DataLayer.dll.config
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\DocumentFormat.OpenXml.xml
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\EntityLayer.pdb
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\ExcelNumberFormat.xml
@@ -135,11 +138,8 @@ D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\System.Web.WebPages.Razor.xml
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\Newtonsoft.Json.xml
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\Antlr3.Runtime.pdb
 D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\WorkingProject\Source\Repos\VendorAPIWeb\obj\Debug\VendorAPI.csprojAssemblyReference.cache
 D:\WorkingProject\Source\Repos\VendorAPIWeb\obj\Debug\VendorAPI.csproj.CoreCompileInputs.cache
 D:\WorkingProject\Source\Repos\VendorAPIWeb\obj\Debug\VendorAPI.csproj.CopyComplete
 D:\WorkingProject\Source\Repos\VendorAPIWeb\obj\Debug\VendorAPI.dll
 D:\WorkingProject\Source\Repos\VendorAPIWeb\obj\Debug\VendorAPI.pdb
-D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\EntityFramework.dll
-D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\DataLayer.pdb
-D:\WorkingProject\Source\Repos\VendorAPIWeb\bin\DataLayer.dll.config
-D:\WorkingProject\Source\Repos\VendorAPIWeb\obj\Debug\VendorAPI.csprojAssemblyReference.cache

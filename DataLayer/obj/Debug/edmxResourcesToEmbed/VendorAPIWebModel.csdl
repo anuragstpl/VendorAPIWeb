@@ -13,7 +13,7 @@
       <PropertyRef Name="SPIssueID" />
     </Key>
     <Property Name="SPIssueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ServiceProviderCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="IssueItem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Issue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -21,10 +21,10 @@
   </EntityType>
   <EntityType Name="ServiceProvider">
     <Key>
-      <PropertyRef Name="ServiceProviderCode" />
+      <PropertyRef Name="VendorCode" />
     </Key>
     <Property Name="ServiceProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ServiceProviderCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StatusID" Type="Int32" />
     <Property Name="GoLiveDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -54,6 +54,15 @@
     <Property Name="Type1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ServiceProviders" Relationship="Self.FK_ServiceProviders_Type" FromRole="Type" ToRole="ServiceProviders" />
   </EntityType>
+  <EntityType Name="UploadExcelLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="UploadDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UploadExcelLog_User" FromRole="UploadExcelLog" ToRole="User" />
+  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="UserID" />
@@ -66,6 +75,7 @@
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="UserRoleID" Type="Int32" />
+    <NavigationProperty Name="UploadExcelLogs" Relationship="Self.FK_UploadExcelLog_User" FromRole="User" ToRole="UploadExcelLog" />
     <NavigationProperty Name="UserRole" Relationship="Self.FK_User_UserRoles" FromRole="User" ToRole="UserRoles" />
   </EntityType>
   <EntityType Name="UserRole">
@@ -93,10 +103,10 @@
     <End Role="ServiceProviderIssue" Type="Self.ServiceProviderIssue" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ServiceProviders">
-        <PropertyRef Name="ServiceProviderCode" />
+        <PropertyRef Name="VendorCode" />
       </Principal>
       <Dependent Role="ServiceProviderIssue">
-        <PropertyRef Name="ServiceProviderCode" />
+        <PropertyRef Name="VendorCode" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -124,6 +134,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UploadExcelLog_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UploadExcelLog" Type="Self.UploadExcelLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UploadExcelLog">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_UserRoles">
     <End Role="UserRoles" Type="Self.UserRole" Multiplicity="0..1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -142,6 +164,7 @@
     <EntitySet Name="ServiceProviders" EntityType="Self.ServiceProvider" />
     <EntitySet Name="Status" EntityType="Self.Status" />
     <EntitySet Name="Types" EntityType="Self.Type" />
+    <EntitySet Name="UploadExcelLogs" EntityType="Self.UploadExcelLog" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
     <AssociationSet Name="FK_ServiceProviders_Phase" Association="Self.FK_ServiceProviders_Phase">
@@ -159,6 +182,10 @@
     <AssociationSet Name="FK_ServiceProviders_Type" Association="Self.FK_ServiceProviders_Type">
       <End Role="Type" EntitySet="Types" />
       <End Role="ServiceProviders" EntitySet="ServiceProviders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UploadExcelLog_User" Association="Self.FK_UploadExcelLog_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UploadExcelLog" EntitySet="UploadExcelLogs" />
     </AssociationSet>
     <AssociationSet Name="FK_User_UserRoles" Association="Self.FK_User_UserRoles">
       <End Role="UserRoles" EntitySet="UserRoles" />

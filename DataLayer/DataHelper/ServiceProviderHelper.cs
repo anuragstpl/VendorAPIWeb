@@ -24,7 +24,7 @@ namespace DataLayer.DataHelper
                     .Join(uow.TypeRepository.Get(), tpr => tpr.ppr.upr.spr.PhaseID, ttp => ttp.TypeID, (tpr, ttp) => new { tpr, ttp })
                     .Select(sprd => new ServiceProviderEntity
                     {
-                        ServiceProviderCode = sprd.tpr.ppr.upr.spr.ServiceProviderCode,
+                        VendorCode = sprd.tpr.ppr.upr.spr.VendorCode,
                         Fees = sprd.tpr.ppr.upr.spr.Fees,
                         GoLiveDate = sprd.tpr.ppr.upr.spr.GoLiveDate,
                         Name = sprd.tpr.ppr.upr.spr.Name.ToString(),
@@ -38,7 +38,7 @@ namespace DataLayer.DataHelper
                         Type = sprd.ttp.Type1,
                         IssuesList = sprd.tpr.ppr.upr.spr.ServiceProviderIssues.Select(spis => new IssuesEntity
                         {
-                            ServiceProviderCode = spis.ServiceProviderCode,
+                            VendorCode = spis.VendorCode,
                             Issue = spis.Issue,
                             Item = spis.IssueItem,
                             Owner = spis.Owner
@@ -99,93 +99,101 @@ namespace DataLayer.DataHelper
 
                 using (uow = new VendorAPIRepository())
                 {
-                    foreach (var serviceProviderEntity in serviceProviderEntityList)
+                    if (serviceProviderEntityList != null && serviceProviderEntityList.Count > 0)
                     {
-                        bool isStatusExists = uow.StatusRepository.Get().Any(x => x.StatusName == serviceProviderEntity.Status);
-                        if (!isStatusExists)
+                        foreach (var serviceProviderEntity in serviceProviderEntityList)
                         {
-                            Status status = new Status();
-                            status.StatusName = serviceProviderEntity.Status;
-                            uow.StatusRepository.Insert(status);
-                            uow.Save();
-                        }
-
-                        bool isPhaseExists = uow.PhaseRepository.Get().Any(x => x.Phase1 == serviceProviderEntity.Phase);
-                        if (!isPhaseExists)
-                        {
-                            Phase phase = new Phase();
-                            phase.Phase1 = serviceProviderEntity.Phase;
-                            uow.PhaseRepository.Insert(phase);
-                            uow.Save();
-                        }
-
-                        bool isTypeExists = uow.TypeRepository.Get().Any(x => x.Type1 == serviceProviderEntity.Type);
-                        if (!isTypeExists)
-                        {
-                            Type type = new Type();
-                            type.Type1 = serviceProviderEntity.Type;
-                            uow.TypeRepository.Insert(type);
-                            uow.Save();
-                        }
-
-                        serviceProvider = uow.ServiceProviderRepository.Get().Where(x => x.ServiceProviderCode == serviceProviderEntity.ServiceProviderCode).FirstOrDefault();
-
-                        if (serviceProvider != null)
-                        {
-                            serviceProvider.Name = serviceProviderEntity.Name;
-                            serviceProvider.StatusID = uow.StatusRepository.Get().Where(s => s.StatusName.Trim() == serviceProviderEntity.Status.Trim()).Select(y => y.StatusID).FirstOrDefault();
-                            serviceProvider.GoLiveDate = serviceProviderEntity.GoLiveDate;
-                            serviceProvider.ProjectManagerID = 1;
-                            serviceProvider.PhaseID = uow.PhaseRepository.Get().Where(s => s.Phase1.Trim() == serviceProviderEntity.Phase.Trim()).Select(y => y.PhaseID).FirstOrDefault();
-                            serviceProvider.Fees = serviceProviderEntity.Fees;
-                            serviceProvider.TypeID = uow.TypeRepository.Get().Where(s => s.Type1.Trim() == serviceProviderEntity.Type.Trim()).Select(y => y.TypeID).FirstOrDefault();
-                            serviceProvider.Update = serviceProviderEntity.Update;
-
-                            uow.ServiceProviderRepository.Update(serviceProvider);
-                        }
-                        else
-                        {
-                            serviceProvider = new ServiceProvider();
-                            serviceProvider.ServiceProviderCode = serviceProviderEntity.ServiceProviderCode;
-                            serviceProvider.Name = serviceProviderEntity.Name;
-                            serviceProvider.StatusID = uow.StatusRepository.Get().Where(s => s.StatusName.Trim() == serviceProviderEntity.Status.Trim()).Select(y => y.StatusID).FirstOrDefault();
-                            serviceProvider.GoLiveDate = serviceProviderEntity.GoLiveDate;
-                            serviceProvider.ProjectManagerID = 1;
-                            serviceProvider.PhaseID = uow.PhaseRepository.Get().Where(s => s.Phase1.Trim() == serviceProviderEntity.Phase.Trim()).Select(y => y.PhaseID).FirstOrDefault();
-                            serviceProvider.Fees = serviceProviderEntity.Fees;
-                            serviceProvider.TypeID = uow.TypeRepository.Get().Where(s => s.Type1.Trim() == serviceProviderEntity.Type.Trim()).Select(y => y.TypeID).FirstOrDefault();
-                            serviceProvider.Update = serviceProviderEntity.Update;
-
-                            uow.ServiceProviderRepository.Insert(serviceProvider);
-                        }
-                        uow.Save();
-
-                        if (serviceProviderEntity.IssuesList != null && serviceProviderEntity.IssuesList.Count > 0)
-                        {
-                            foreach (var issue in serviceProviderEntity.IssuesList)
+                            bool isStatusExists = uow.StatusRepository.Get().Any(x => x.StatusName == serviceProviderEntity.Status);
+                            if (!isStatusExists)
                             {
-                                serviceProviderIssue = uow.ServiceProviderIssueRepository.Get().Where(x => x.ServiceProviderCode == issue.ServiceProviderCode && x.IssueItem == issue.Item).FirstOrDefault();
+                                Status status = new Status();
+                                status.StatusName = serviceProviderEntity.Status;
+                                uow.StatusRepository.Insert(status);
+                                uow.Save();
+                            }
 
-                                if (serviceProviderIssue != null)
-                                {
-                                    serviceProviderIssue.ServiceProviderCode = serviceProviderEntity.ServiceProviderCode;
-                                    serviceProviderIssue.IssueItem = issue.Item;
-                                    serviceProviderIssue.Issue = issue.Issue;
-                                    serviceProviderIssue.Owner = issue.Owner;
-                                    uow.ServiceProviderIssueRepository.Update(serviceProviderIssue);
-                                }
-                                else
-                                {
-                                    serviceProviderIssue = new ServiceProviderIssue();
-                                    serviceProviderIssue.ServiceProviderCode = serviceProviderEntity.ServiceProviderCode;
-                                    serviceProviderIssue.IssueItem = issue.Item;
-                                    serviceProviderIssue.Issue = issue.Issue;
-                                    serviceProviderIssue.Owner = issue.Owner;
-                                    uow.ServiceProviderIssueRepository.Insert(serviceProviderIssue);
-                                }
+                            bool isPhaseExists = uow.PhaseRepository.Get().Any(x => x.Phase1 == serviceProviderEntity.Phase);
+                            if (!isPhaseExists)
+                            {
+                                Phase phase = new Phase();
+                                phase.Phase1 = serviceProviderEntity.Phase;
+                                uow.PhaseRepository.Insert(phase);
+                                uow.Save();
+                            }
+
+                            bool isTypeExists = uow.TypeRepository.Get().Any(x => x.Type1 == serviceProviderEntity.Type);
+                            if (!isTypeExists)
+                            {
+                                Type type = new Type();
+                                type.Type1 = serviceProviderEntity.Type;
+                                uow.TypeRepository.Insert(type);
+                                uow.Save();
+                            }
+
+                            serviceProvider = uow.ServiceProviderRepository.Get().Where(x => x.VendorCode == serviceProviderEntity.VendorCode).FirstOrDefault();
+
+                            if (serviceProvider != null)
+                            {
+                                serviceProvider.Name = serviceProviderEntity.Name;
+                                serviceProvider.StatusID = uow.StatusRepository.Get().Where(s => s.StatusName.Trim() == serviceProviderEntity.Status.Trim()).Select(y => y.StatusID).FirstOrDefault();
+                                serviceProvider.GoLiveDate = serviceProviderEntity.GoLiveDate;
+                                serviceProvider.ProjectManagerID = 1;
+                                serviceProvider.PhaseID = uow.PhaseRepository.Get().Where(s => s.Phase1.Trim() == serviceProviderEntity.Phase.Trim()).Select(y => y.PhaseID).FirstOrDefault();
+                                serviceProvider.Fees = serviceProviderEntity.Fees;
+                                serviceProvider.TypeID = uow.TypeRepository.Get().Where(s => s.Type1.Trim() == serviceProviderEntity.Type.Trim()).Select(y => y.TypeID).FirstOrDefault();
+                                serviceProvider.Update = serviceProviderEntity.Update;
+
+                                uow.ServiceProviderRepository.Update(serviceProvider);
+                            }
+                            else
+                            {
+                                serviceProvider = new ServiceProvider();
+                                serviceProvider.VendorCode = serviceProviderEntity.VendorCode;
+                                serviceProvider.Name = serviceProviderEntity.Name;
+                                serviceProvider.StatusID = uow.StatusRepository.Get().Where(s => s.StatusName.Trim() == serviceProviderEntity.Status.Trim()).Select(y => y.StatusID).FirstOrDefault();
+                                serviceProvider.GoLiveDate = serviceProviderEntity.GoLiveDate;
+                                serviceProvider.ProjectManagerID = 1;
+                                serviceProvider.PhaseID = uow.PhaseRepository.Get().Where(s => s.Phase1.Trim() == serviceProviderEntity.Phase.Trim()).Select(y => y.PhaseID).FirstOrDefault();
+                                serviceProvider.Fees = serviceProviderEntity.Fees;
+                                serviceProvider.TypeID = uow.TypeRepository.Get().Where(s => s.Type1.Trim() == serviceProviderEntity.Type.Trim()).Select(y => y.TypeID).FirstOrDefault();
+                                serviceProvider.Update = serviceProviderEntity.Update;
+
+                                uow.ServiceProviderRepository.Insert(serviceProvider);
                             }
                             uow.Save();
+
+                            if (serviceProviderEntity.IssuesList != null && serviceProviderEntity.IssuesList.Count > 0)
+                            {
+                                foreach (var issue in serviceProviderEntity.IssuesList)
+                                {
+                                    serviceProviderIssue = uow.ServiceProviderIssueRepository.Get().Where(x => x.VendorCode == issue.VendorCode && x.IssueItem == issue.Item).FirstOrDefault();
+
+                                    if (serviceProviderIssue != null)
+                                    {
+                                        serviceProviderIssue.VendorCode = serviceProviderEntity.VendorCode;
+                                        serviceProviderIssue.IssueItem = issue.Item;
+                                        serviceProviderIssue.Issue = issue.Issue;
+                                        serviceProviderIssue.Owner = issue.Owner;
+                                        uow.ServiceProviderIssueRepository.Update(serviceProviderIssue);
+                                    }
+                                    else
+                                    {
+                                        serviceProviderIssue = new ServiceProviderIssue();
+                                        serviceProviderIssue.VendorCode = serviceProviderEntity.VendorCode;
+                                        serviceProviderIssue.IssueItem = issue.Item;
+                                        serviceProviderIssue.Issue = issue.Issue;
+                                        serviceProviderIssue.Owner = issue.Owner;
+                                        uow.ServiceProviderIssueRepository.Insert(serviceProviderIssue);
+                                    }
+                                }
+                                uow.Save();
+                            }
                         }
+                        UploadExcelLog uploadExcelLog = new UploadExcelLog();
+                        uploadExcelLog.UserId = 1;//need to dynamic
+                        uploadExcelLog.UploadDate = DateTime.Now;
+                        uow.UploadExcelLogRepository.Insert(uploadExcelLog);
+                        uow.Save();
                     }
                 }
             }

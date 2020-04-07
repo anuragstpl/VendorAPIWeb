@@ -20,7 +20,7 @@ namespace VendorAPI.DataLayer
         }
     
         public int ServiceProviderID { get; set; }
-        public string ServiceProviderCode { get; set; }
+        public string VendorCode { get; set; }
         public string Name { get; set; }
         public Nullable<int> StatusID { get; set; }
         public string GoLiveDate { get; set; }

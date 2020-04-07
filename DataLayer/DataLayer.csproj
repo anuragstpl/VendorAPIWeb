@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHelper\CommonHelper.cs" />
     <Compile Include="DataHelper\ServiceProviderHelper.cs" />
     <Compile Include="DataHelper\UserHelper.cs" />
     <Compile Include="Phase.cs">
@@ -75,6 +76,9 @@
     </Compile>
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="UnitOfWork\VendorAPIRepository.cs" />
+    <Compile Include="UploadExcelLog.cs">
+      <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>VendorAPIWebModel.tt</DependentUpon>
     </Compile>

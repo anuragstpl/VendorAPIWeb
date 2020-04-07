@@ -18,6 +18,7 @@ namespace DataLayer.UnitOfWork
         private UnitOfWork<Phase> phaseRepository;
         private UnitOfWork<User> userRepository;
         private UnitOfWork<UserRole> userRoleRepository;
+        private UnitOfWork<UploadExcelLog> uploadExcelLogRepository;
 
         public UnitOfWork<ServiceProvider> ServiceProviderRepository
         {
@@ -86,6 +87,16 @@ namespace DataLayer.UnitOfWork
                 if (this.userRoleRepository == null)
                     this.userRoleRepository = new UnitOfWork<UserRole>(context);
                 return userRoleRepository;
+            }
+        }
+
+        public UnitOfWork<UploadExcelLog> UploadExcelLogRepository
+        {
+            get
+            {
+                if (this.uploadExcelLogRepository == null)
+                    this.uploadExcelLogRepository = new UnitOfWork<UploadExcelLog>(context);
+                return uploadExcelLogRepository;
             }
         }
 

@@ -12,17 +12,17 @@
       <PropertyRef Name="SPIssueID" />
     </Key>
     <Property Name="SPIssueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ServiceProviderCode" Type="varchar" MaxLength="50" />
+    <Property Name="VendorCode" Type="varchar" MaxLength="50" />
     <Property Name="IssueItem" Type="nvarchar" MaxLength="50" />
     <Property Name="Issue" Type="nvarchar(max)" />
     <Property Name="Owner" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ServiceProviders">
     <Key>
-      <PropertyRef Name="ServiceProviderCode" />
+      <PropertyRef Name="VendorCode" />
     </Key>
     <Property Name="ServiceProviderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ServiceProviderCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="VendorCode" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="StatusID" Type="int" />
     <Property Name="GoLiveDate" Type="varchar" MaxLength="50" />
@@ -45,6 +45,14 @@
     </Key>
     <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Type" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UploadExcelLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="UploadDate" Type="date" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -71,10 +79,10 @@
     <End Role="ServiceProviderIssue" Type="Self.ServiceProviderIssue" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ServiceProviders">
-        <PropertyRef Name="ServiceProviderCode" />
+        <PropertyRef Name="VendorCode" />
       </Principal>
       <Dependent Role="ServiceProviderIssue">
-        <PropertyRef Name="ServiceProviderCode" />
+        <PropertyRef Name="VendorCode" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -114,6 +122,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UploadExcelLog_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UploadExcelLog" Type="Self.UploadExcelLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UploadExcelLog">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_UserRoles">
     <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="0..1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -132,6 +152,7 @@
     <EntitySet Name="ServiceProviders" EntityType="Self.ServiceProviders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UploadExcelLog" EntityType="Self.UploadExcelLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_ServiceProviderIssue_ServiceProviders" Association="Self.FK_ServiceProviderIssue_ServiceProviders">
@@ -149,6 +170,10 @@
     <AssociationSet Name="FK_ServiceProviders_Type" Association="Self.FK_ServiceProviders_Type">
       <End Role="Type" EntitySet="Type" />
       <End Role="ServiceProviders" EntitySet="ServiceProviders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UploadExcelLog_User" Association="Self.FK_UploadExcelLog_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UploadExcelLog" EntitySet="UploadExcelLog" />
     </AssociationSet>
     <AssociationSet Name="FK_User_UserRoles" Association="Self.FK_User_UserRoles">
       <End Role="UserRoles" EntitySet="UserRoles" />

@@ -8,7 +8,7 @@ namespace EntityLayer
 {
     public class IssuesEntity
     {
-        public string ServiceProviderCode { get; set; }
+        public string VendorCode { get; set; }
         public string Item { get; set; }
         public string Issue { get; set; }
         public string Owner { get; set; }

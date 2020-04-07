@@ -30,6 +30,7 @@ namespace VendorAPI.DataLayer
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
         public DbSet<Status> Status { get; set; }
         public DbSet<Type> Types { get; set; }
+        public DbSet<UploadExcelLog> UploadExcelLogs { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
     }

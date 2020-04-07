@@ -16,10 +16,10 @@ namespace DataLayer.DataHelper
             using (uow = new VendorAPIRepository())
             {
                 //isUserValid = uow.UserRepository.Get().Any(x => x.Username == userEntity.Username && x.Password == userEntity.Password);
-                userEntity = uow.UserRepository.Get().Where(urp => urp.Username == userEntity.Username && urp.Password == userEntity.Password)
+                userEntity = uow.UserRepository.Get().Where(urp => urp.Username == userEntity.Username && CommonHelper.Decrypt(urp.Password) == userEntity.Password)
                     .Select(x => new UserEntity
                     {
-                        UserID =Convert.ToInt32(x.UserID),
+                        UserID = Convert.ToInt32(x.UserID),
                         Username = x.Username,
                         Password = x.Password,
                         UserRoleID = Convert.ToInt32(x.UserRoleID),
@@ -101,8 +101,8 @@ namespace DataLayer.DataHelper
                 {
                     User user = uow.UserRepository.Get().Where(x => x.UserID == userProfileData.UserId).FirstOrDefault();
                     if (user != null)
-                    {                        
-                        user.Email = userProfileData.Email;                        
+                    {
+                        user.Email = userProfileData.Email;
                         uow.UserRepository.Update(user);
                         uow.Save();
                     }

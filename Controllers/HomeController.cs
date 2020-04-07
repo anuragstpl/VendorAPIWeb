@@ -29,9 +29,10 @@ namespace VendorAPI.Controllers
             string viewName = "";
             userEntity = userHelper.LoginUser(userEntity);
 
-            if (userEntity!=null && userEntity.UserID > 0)
+            if (userEntity != null && userEntity.UserID > 0)
             {
                 Session["UserID"] = userEntity.UserID;
+                Session["EmailID"] = userEntity.Email;
                 FormsAuthentication.SetAuthCookie(userEntity.Username, true);
                 if (userEntity.UserRoleID == 1)
                 {
@@ -56,7 +57,7 @@ namespace VendorAPI.Controllers
             DataTable dt = new DataTable("ServiceProviders");
             dt.Columns.AddRange(
             new DataColumn[9] {
-            new DataColumn("ServiceProviderCode"),
+            new DataColumn("VendorCode"),
             new DataColumn("Name"),
             new DataColumn("Status"),
             new DataColumn("GoLiveDate"),
@@ -69,7 +70,7 @@ namespace VendorAPI.Controllers
             DataTable dtIssue = new DataTable("IssueList");
             dtIssue.Columns.AddRange(
             new DataColumn[5] {
-            new DataColumn("ServiceProviderCode"),
+            new DataColumn("VendorCode"),
             new DataColumn("Name"),
             new DataColumn("Item"),
             new DataColumn("Issue"),
@@ -83,7 +84,7 @@ namespace VendorAPI.Controllers
 
                 foreach (var issue in serviceProvider.IssuesList)
                 {
-                    dtIssue.Rows.Add(issue.ServiceProviderCode, serviceProvider.Name, issue.Item, issue.Issue, issue.Owner);
+                    dtIssue.Rows.Add(issue.VendorCode, serviceProvider.Name, issue.Item, issue.Issue, issue.Owner);
                 }
             }
 
@@ -215,7 +216,7 @@ namespace VendorAPI.Controllers
                 {
                     if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                     {
-                        string filename = FileUpload.FileName;
+                        string filename = Path.GetFileName(FileUpload.FileName);
 
                         if (filename.EndsWith(".xlsx") || filename.EndsWith(".xls"))
                         {
@@ -224,7 +225,7 @@ namespace VendorAPI.Controllers
                             string pathToExcelFile = targetpath + filename;
 
                             var excelFile = new ExcelQueryFactory(pathToExcelFile);//
-                            var providerList = from provider in excelFile.Worksheet<ServiceProviderEntity>("ServiceProviderList") select provider;
+                            var providerList = from provider in excelFile.Worksheet<ServiceProviderEntity>("ProviderList") select provider;
                             var issueList = from issue in excelFile.Worksheet<IssuesEntity>("IssueList") select issue;
 
                             //ValidateExcelFile();
@@ -236,7 +237,7 @@ namespace VendorAPI.Controllers
                                 {
                                     ServiceProviderEntity serviceProviderEntity = new ServiceProviderEntity();
 
-                                    serviceProviderEntity.ServiceProviderCode = provider.ServiceProviderCode;
+                                    serviceProviderEntity.VendorCode = provider.VendorCode;
                                     serviceProviderEntity.Name = provider.Name;
                                     serviceProviderEntity.Status = provider.Status;
                                     serviceProviderEntity.GoLiveDate = provider.GoLiveDate;
@@ -248,12 +249,12 @@ namespace VendorAPI.Controllers
                                     //serviceProviderEntity.IssuesList = issueList == null ? null : new List<IssuesEntity>() { new IssuesEntity() { Item = issueList.Where(x => x.ServiceProviderCode == provider.ServiceProviderCode).Select(y => y.Item).FirstOrDefault(), Issue = issueList.Where(x => x.ServiceProviderCode == provider.ServiceProviderCode).Select(y => y.Issue).FirstOrDefault(), Owner = issueList.Where(x => x.ServiceProviderCode == provider.ServiceProviderCode).Select(y => y.Owner).FirstOrDefault() } };
 
                                     List<IssuesEntity> IssuesEntityList = new List<IssuesEntity>();
-                                    foreach (var issue in issueList.Where(i => i.ServiceProviderCode == provider.ServiceProviderCode))
+                                    foreach (var issue in issueList.Where(i => i.VendorCode == provider.VendorCode))
                                     {
                                         if (issue.Issue != null)
                                         {
                                             IssuesEntity issuesEntity = new IssuesEntity();
-                                            issuesEntity.ServiceProviderCode = issue.ServiceProviderCode;
+                                            issuesEntity.VendorCode = issue.VendorCode;
                                             issuesEntity.Item = issue.Item;
                                             issuesEntity.Issue = issue.Issue;
                                             issuesEntity.Owner = issue.Owner;
@@ -275,7 +276,7 @@ namespace VendorAPI.Controllers
                                 EmailSetting emailSetting = new EmailSetting();
                                 string Body = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplates/ExcelUploadMail.html"));
 
-                                bool isMailSend = emailSetting.SendMail("irfan.siddiqui@srmtechsol.com", "", "Provider Details Upload Notification", Body.Replace("currDate", DateTime.Now.ToString("MMMM dd, yyyy")));
+                                bool isMailSend = emailSetting.SendMail(Convert.ToString(Session["EmailID"]), "", "Provider Details Upload Notification", Body.Replace("currDate", DateTime.Now.ToString("MMMM dd, yyyy")));
                                 viewName = "uploadconfirmation";
                             }
                         }
@@ -294,10 +295,10 @@ namespace VendorAPI.Controllers
                 else
                 {
                     TempData["Message"] = "Please select file.";
-                    return RedirectToAction("AdminDashboard", "Home");
+                    viewName = "AdminDashboard";
                 }
             }
-            catch (Exception ex) { TempData["Message"] = "some issue occured. please try again"; }
+            catch (Exception ex) { TempData["Message"] = "some issue occured. please try again"; viewName = "AdminDashboard"; }
             return RedirectToAction(viewName);
         }
 
@@ -310,7 +311,7 @@ namespace VendorAPI.Controllers
                 if (dataTable.Rows[i][0].ToString() == "")
                 {
                     int RowNo = i + 2;
-                    errorMsg = "Please enter service provider name in row " + RowNo + "'"; 
+                    errorMsg = "Please enter service provider name in row " + RowNo + "'";
                 }
             }
             return errorMsg;
@@ -331,6 +332,7 @@ namespace VendorAPI.Controllers
 
         public ActionResult Logout()
         {
+            Session.RemoveAll();
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }

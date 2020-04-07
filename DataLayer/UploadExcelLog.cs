@@ -12,14 +12,12 @@ namespace VendorAPI.DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class ServiceProviderIssue
+    public partial class UploadExcelLog
     {
-        public int SPIssueID { get; set; }
-        public string VendorCode { get; set; }
-        public string IssueItem { get; set; }
-        public string Issue { get; set; }
-        public string Owner { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<System.DateTime> UploadDate { get; set; }
     
-        public virtual ServiceProvider ServiceProvider { get; set; }
+        public virtual User User { get; set; }
     }
 }

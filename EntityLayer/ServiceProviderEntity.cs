@@ -9,7 +9,7 @@ namespace EntityLayer
     public class ServiceProviderEntity
     {
         public string Name { get; set; }
-        public string ServiceProviderCode { get; set; }
+        public string VendorCode { get; set; }
         public string GoLiveDate { get; set; }
         public string ProjectManager { get; set; }
 

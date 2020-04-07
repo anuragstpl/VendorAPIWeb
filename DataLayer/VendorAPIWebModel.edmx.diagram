@@ -4,18 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2b3f628a648e4b2198462db36d02dc5b" Name="Diagram1">
+      <Diagram DiagramId="6e07235a040c4df6b81206a49968fbb5" Name="Diagram1">
         <EntityTypeShape EntityType="VendorAPIWebModel.Phase" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="VendorAPIWebModel.ServiceProviderIssue" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VendorAPIWebModel.ServiceProvider" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VendorAPIWebModel.Status" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VendorAPIWebModel.Type" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VendorAPIWebModel.UploadExcelLog" Width="1.5" PointX="7.25" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="VendorAPIWebModel.User" Width="1.5" PointX="5" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VendorAPIWebModel.UserRole" Width="1.5" PointX="2.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="VendorAPIWebModel.UserRole" Width="1.5" PointX="2.75" PointY="8.125" IsExpanded="true" />
         <AssociationConnector Association="VendorAPIWebModel.FK_ServiceProviders_Phase" ManuallyRouted="false" />
         <AssociationConnector Association="VendorAPIWebModel.FK_ServiceProviderIssue_ServiceProviders" ManuallyRouted="false" />
         <AssociationConnector Association="VendorAPIWebModel.FK_ServiceProviders_Status" ManuallyRouted="false" />
         <AssociationConnector Association="VendorAPIWebModel.FK_ServiceProviders_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="VendorAPIWebModel.FK_UploadExcelLog_User" ManuallyRouted="false" />
         <AssociationConnector Association="VendorAPIWebModel.FK_User_UserRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
